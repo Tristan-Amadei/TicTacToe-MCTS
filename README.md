@@ -1,0 +1,37 @@
+# Tic-Tac-Toe
+## Different approaches to implement an AI to play the game
+
+I chose the game of Tic-Tac-Toe because the game is simple and a position doesn't have a lot of possible game variants, unlike games like chess where the number of different positions becomes extremely high very quickly. 
+
+I implemented different approaches to code the opponent:
+- Minimax
+- Alpha-Beta pruning
+- Monte-Carlo Tree Search
+
+I also added a GUI using pygame. The player can play with either the Xs or the Os, and the AI will take the others automatically. </br> </br>
+![gui](/assets/images/gui_resized.png)
+
+## Monte-Carlo Tree Search
+
+**_Monte Carlo Tree Search (MCTS)_** is a heuristic search algorithm, known for its effectiveness in finding optimal solutions within large search spaces. <br/>
+
+The MCTS algorithm builds a tree-like structure by iteratively exploring different paths in the search space. At each iteration, it selects a node in the tree, expands it by adding child nodes corresponding to possible actions, and then simulates random gameplay from these child nodes to evaluate their potential outcomes.
+
+By repeating this process many times and updating the statistics of each node based on the simulation results, MCTS gradually focuses on the most promising actions and improves its decision-making capabilities. <br/><br/>
+![mcts](assets/images/mcts.png) <br/><br/>
+
+### Exploration-Exploitation Tradeoff
+
+MCTS employs a strategy called the exploration-exploitation tradeoff to balance between exploring new paths and exploiting known information to find optimal solutions within large search spaces.
+
+One of the key components of MCTS is the Upper Confidence Bound (UCB) algorithm, which is used to select the most promising nodes in the search tree. 
+
+$$UCB(node_i) = \frac{w_i}{n_i} + c \sqrt{\frac{ln N_i}{n_i}}$$ 
+- $w_i$ : number of games after $node_i$was visited
+- $n_i$ : number of visits of $node_i$
+- $N_i$ : number of visits of the parents of $node_i$
+- c : constant; usually, $c = \sqrt{2}$
+
+The UCB algorithm calculates an exploration term that encourages exploration of less-visited nodes and an exploitation term that favors nodes with better statistical estimates.
+
+The balance between exploration and exploitation is crucial for the effectiveness of MCTS. Initially, the algorithm tends to explore more to gain a broader understanding of the search space. As more simulations are performed, the exploitation term becomes dominant, and the algorithm focuses on exploiting the knowledge gained from previous explorations.
