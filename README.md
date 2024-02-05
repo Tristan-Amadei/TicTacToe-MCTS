@@ -1,5 +1,5 @@
 # Tic-Tac-Toe
-## Tic-Tac-Tie engine
+## Tic-Tac-Toe engine
 
 I chose the game of Tic-Tac-Toe because it is simple and a position doesn't have a lot of possible game variants, unlike games like chess where the number of different positions becomes extremely high very quickly. 
 
