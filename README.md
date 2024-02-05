@@ -6,7 +6,8 @@ I chose the game of Tic-Tac-Toe because it is simple and a position doesn't have
 The Monte-Carlo Tree Search method was implemented to code the engine that pays the game. <br>
 On each position, the engine runs 5000 simulations.
 
-I also added a GUI using pygame. The player can play with either the Xs or the Os, and the AI will take the others automatically. </br> </br>
+I also added a GUI using pygame. The player can play with either the Xs or the Os, and the AI will take the others automatically. <br>
+On tis example, I was playing X and the engine I was playing against has the O.</br> </br>
 ![gui](/assets/gif/game.gif)
 
 ## Monte-Carlo Tree Search
