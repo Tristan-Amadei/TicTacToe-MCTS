@@ -23,9 +23,9 @@ By repeating this process many times and updating the statistics of each node ba
 
 MCTS employs a strategy called the exploration-exploitation tradeoff to balance between exploring new paths and exploiting known information to find optimal solutions within large search spaces.
 
-One of the key components of MCTS is the Upper Confidence Bound (UCB) algorithm, which is used to select the most promising nodes in the search tree. 
+One of the key components of MCTS is the Upper Confidence Bound on Trees (UCT) algorithm, which is used to select the most promising nodes in the search tree. 
 
-$$UCB(node_i) = \frac{w_i}{n_i} + c \sqrt{\frac{ln N_i}{n_i}}$$ 
+$$UCT(node_i) = \frac{w_i}{n_i} + c \sqrt{\frac{ln N_i}{n_i}}$$ 
 - $w_i$ : number of games after $node_i$was visited
 - $n_i$ : number of visits of $node_i$
 - $N_i$ : number of visits of the parents of $node_i$
