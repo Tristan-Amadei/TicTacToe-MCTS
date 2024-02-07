@@ -1,12 +1,13 @@
 # Tic-Tac-Toe
-## Tic-Tac-Tie engine
+## Tic-Tac-Toe engine
 
 I chose the game of Tic-Tac-Toe because it is simple and a position doesn't have a lot of possible game variants, unlike games like chess where the number of different positions becomes extremely high very quickly. 
 
 The Monte-Carlo Tree Search method was implemented to code the engine that pays the game. <br>
 On each position, the engine runs 5000 simulations.
 
-I also added a GUI using pygame. The player can play with either the Xs or the Os, and the AI will take the others automatically. </br> </br>
+I also added a GUI using pygame. The player can play with either the Xs or the Os, and the AI will take the others automatically. <br>
+On this example, I was playing as X and the engine I was playing against was playing as O.</br> </br>
 ![gui](/assets/gif/game.gif)
 
 ## Monte-Carlo Tree Search
@@ -22,9 +23,9 @@ By repeating this process many times and updating the statistics of each node ba
 
 MCTS employs a strategy called the exploration-exploitation tradeoff to balance between exploring new paths and exploiting known information to find optimal solutions within large search spaces.
 
-One of the key components of MCTS is the Upper Confidence Bound (UCB) algorithm, which is used to select the most promising nodes in the search tree. 
+One of the key components of MCTS is the Upper Confidence Bound on Trees (UCT) algorithm, which is used to select the most promising nodes in the search tree. 
 
-$$UCB(node_i) = \frac{w_i}{n_i} + c \sqrt{\frac{ln N_i}{n_i}}$$ 
+$$UCT(node_i) = \frac{w_i}{n_i} + c \sqrt{\frac{ln N_i}{n_i}}$$ 
 - $w_i$ : number of games after $node_i$was visited
 - $n_i$ : number of visits of $node_i$
 - $N_i$ : number of visits of the parents of $node_i$
