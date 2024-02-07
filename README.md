@@ -1,4 +1,18 @@
 # Tic-Tac-Toe
+## How to play
+##### Install dependencies
+```sh
+$ pip install -r requirements.txt
+```
+
+##### Laucnh the GUI
+To launch the GUI, once the dependencies have been installed, just run the python code in Code/GUI.py. You will be prompted with a window containing a Tic-Tac-Toe grid. <br>
+You have to select, at the bottom of the window, whether you want to play as X or O (you will always start first). <br>
+To make a move, double-click on an empty square. Once you have played, the engine will activate automatically and play a response. <br>
+You can take back a move by pressing the left directional arrow on your keyboard.
+
+You may look at the gif below to see how the GUI looks like and how a game can be played. 
+
 ## Tic-Tac-Toe engine
 
 I chose the game of Tic-Tac-Toe because it is simple and a position doesn't have a lot of possible game variants, unlike games like chess where the number of different positions becomes extremely high very quickly. 
