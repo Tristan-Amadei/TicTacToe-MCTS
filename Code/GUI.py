@@ -1,6 +1,5 @@
 import pygame
 from Board import Board, direction
-from Minimax_AlphaBeta import *
 from threading import Thread
 from MCTS import play_mcts
 
