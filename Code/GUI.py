@@ -231,7 +231,7 @@ def main():
                 if move_was_played and not board.isGameOver():
                     engine_running = True
                     
-                    thread = Thread(target=play_mcts, args=(board, opponent, 5000, 1.5))
+                    thread = Thread(target=play_mcts, args=(board, opponent, 2*5000, 1.4))
                     
                     thread.start()  
                     

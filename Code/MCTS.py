@@ -1,7 +1,7 @@
 from Board import Board
 from Minimax_AlphaBeta import back_to_start_state
 from math import log
-#from numba import njit
+import numpy as np
 
 class Node:
     
@@ -37,7 +37,7 @@ class Node:
         if self.visits == 0:
             return 0
         
-        return (self.wins + 0.75*self.draws) / self.visits #we count the draws in the winrate because, under best play, a draw is the best result one can get
+        return (self.wins + 0.5*self.draws) / self.visits #we count the draws in the winrate because, under best play, a draw is the best result one can get
                                                           #however, we give less weight to the draw because we want our engine to favor positions where it wins
             
     def calculate_uct(self, c):
@@ -47,7 +47,7 @@ class Node:
         winrate = self.calculate_winrate()
         
         parents_visits = self.calculate_parents_visits()
-        exploration = c * (log(parents_visits) / self.visits)**(1/2)
+        exploration = c * (np.log2(parents_visits) / self.visits)**(1/2)
         
         return winrate + exploration
 
