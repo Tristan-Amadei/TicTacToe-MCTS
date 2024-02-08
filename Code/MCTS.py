@@ -83,6 +83,12 @@ class Node:
         return total_parents_visits
     
     def calculate_winrate(self):
+        """
+        Calculates the win rate for this node, considering both wins and draws. Draws are counted as half a win to indicate a partially positive outcome.
+
+        Returns:
+            float: The win rate of this node, calculated as (wins + 0.5 * draws) / visits.
+        """
         if self.visits == 0:
             return 0
         

@@ -8,15 +8,16 @@ class direction(Enum):
     DIAG_BOTTOM_TOP = 4
 
 class Board:
-    ##### Players #####
-    ## 1 = player X
-    ## -1 = player O
+    """
+    Players:
+        1 = player X
+        -1 = player O
 
-    ##### Game State #####
-    ## 0 and 9 moves played: draw
-    ## -1: player O wins the game
-    ## 1: player X wins the game
-
+    Game State:
+        0 and 9 moves played: draw
+        -1: player O wins the game
+        1: player X wins the game
+    """
 
     def __init__(self):
         """

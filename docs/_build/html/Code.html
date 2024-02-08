@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Code package &#8212; TicTacToe-MCTS  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Code';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tic-Tac-Toe" href="modules.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TicTacToe-MCTS  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">Tic-Tac-Toe</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Code package</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Code.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Code package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code.MCTS">Code.MCTS module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.add_parent"><code class="docutils literal notranslate"><span class="pre">Node.add_parent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.calculate_parents_visits"><code class="docutils literal notranslate"><span class="pre">Node.calculate_parents_visits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.calculate_uct"><code class="docutils literal notranslate"><span class="pre">Node.calculate_uct()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.calculate_winrate"><code class="docutils literal notranslate"><span class="pre">Node.calculate_winrate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.update"><code class="docutils literal notranslate"><span class="pre">Node.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.back_to_start_state"><code class="docutils literal notranslate"><span class="pre">back_to_start_state()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.backpropagation"><code class="docutils literal notranslate"><span class="pre">backpropagation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.choose_node_uct"><code class="docutils literal notranslate"><span class="pre">choose_node_uct()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.choose_node_winrate"><code class="docutils literal notranslate"><span class="pre">choose_node_winrate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.make_complete_simulation"><code class="docutils literal notranslate"><span class="pre">make_complete_simulation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.play_mcts"><code class="docutils literal notranslate"><span class="pre">play_mcts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.play_move_in_simulation"><code class="docutils literal notranslate"><span class="pre">play_move_in_simulation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code.Board">Code.Board module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board"><code class="docutils literal notranslate"><span class="pre">Board</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.copy"><code class="docutils literal notranslate"><span class="pre">Board.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.display"><code class="docutils literal notranslate"><span class="pre">Board.display()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.display_cell"><code class="docutils literal notranslate"><span class="pre">Board.display_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.display_player_name"><code class="docutils literal notranslate"><span class="pre">Board.display_player_name()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.get_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.get_square_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_square_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.isGameOver"><code class="docutils literal notranslate"><span class="pre">Board.isGameOver()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.play"><code class="docutils literal notranslate"><span class="pre">Board.play()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_column"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_column()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_diag"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_diag()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_row"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.undo_last_move"><code class="docutils literal notranslate"><span class="pre">Board.undo_last_move()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.updateGameState"><code class="docutils literal notranslate"><span class="pre">Board.updateGameState()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="code-package">
+<h1>Code package<a class="headerlink" href="#code-package" title="Link to this heading">#</a></h1>
+<section id="module-Code.MCTS">
+<span id="code-mcts-module"></span><h2>Code.MCTS module<a class="headerlink" href="#module-Code.MCTS" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Code.MCTS.Node">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a node in the MCTS tree, encapsulating the state of the board, statistics of wins, draws, visits, and parent nodes.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>board (Board): The state of the game at this node.
+wins (int): The number of wins observed from this node.
+draws (int): The number of draws observed from this node.
+visits (int): The number of visits to this node.
+parents (set): A set of parent nodes.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.MCTS.Node.add_parent">
+<span class="sig-name descname"><span class="pre">add_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.add_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.add_parent" title="Link to this definition">#</a></dt>
+<dd><p>Adds a parent node to the current node. Parents are tracked to help with the calculation of visits and to maintain the tree structure for backpropagation.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>parent (Node or Board): The parent node to add. If a Board instance is passed, its representation is used as the parent identifier. Otherwise, the parent node itself is added to the parents set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.MCTS.Node.calculate_parents_visits">
+<span class="sig-name descname"><span class="pre">calculate_parents_visits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.calculate_parents_visits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.calculate_parents_visits" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the total number of visits to all parent nodes. This is used in the UCT calculation to adjust the exploration term based on the total number of simulations that have passed through the parent nodes.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The total number of visits to this node’s parent nodes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.MCTS.Node.calculate_uct">
+<span class="sig-name descname"><span class="pre">calculate_uct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.calculate_uct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.calculate_uct" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the Upper Confidence Bound (UCT) for this node, used for selecting nodes during the tree search. The UCT value balances exploration and exploitation by considering both the win rate and the exploration term, which is influenced by the total number of parent visits and the number of visits to this node.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>c (float): The exploration parameter used in the UCT calculation. A higher value of c encourages more exploration.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The UCT value for this node. Returns infinity (<cite>float(‘inf’)</cite>) if the node has not been visited, to ensure unvisited nodes are prioritized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.MCTS.Node.calculate_winrate">
+<span class="sig-name descname"><span class="pre">calculate_winrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.calculate_winrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.calculate_winrate" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the win rate for this node, considering both wins and draws. Draws are counted as half a win to indicate a partially positive outcome.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The win rate of this node, calculated as (wins + 0.5 * draws) / visits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.MCTS.Node.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the node’s statistics based on the outcome of a simulation. Increments the win or draw count, and the visit count.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>player (int): The identifier of the player (1 for player X, -1 for player O) who made the move leading to this node.
+winner (int): The outcome of the game from this node’s perspective (-1 for O wins, 1 for X wins, 0 for draw).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.back_to_start_state">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">back_to_start_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_moves_beginning</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#back_to_start_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.back_to_start_state" title="Link to this definition">#</a></dt>
+<dd><p>Reverts the board to a specified state by undoing moves until it reaches the number of moves at the beginning.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>board (Board): The board to revert.
+nb_moves_beginning (int): The number of moves to revert to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.backpropagation">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">backpropagation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#backpropagation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.backpropagation" title="Link to this definition">#</a></dt>
+<dd><p>Backpropagates the result of a simulation up the tree, updating the statistics of each node visited.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>path (list): The path of nodes visited in the simulation.
+winner (int): The outcome of the game (-1 for O wins, 1 for X wins, 0 for draw).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.choose_node_uct">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">choose_node_uct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#choose_node_uct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.choose_node_uct" title="Link to this definition">#</a></dt>
+<dd><p>Chooses the next move based on the Upper Confidence Bound applied to trees (UCT) metric.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>board (Board): The current state of the board.
+player (int): The current player (-1 for O, 1 for X).
+dic_nodes_visited (dict): A dictionary of visited nodes with their board representation as keys.
+c (float): The exploration parameter for UCT.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: The best move (i, j) and its corresponding node, or None if the game is over.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.choose_node_winrate">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">choose_node_winrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#choose_node_winrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.choose_node_winrate" title="Link to this definition">#</a></dt>
+<dd><p>Chooses the next move based on the highest win rate from the visited nodes.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>board (Board): The current state of the board.
+player (int): The current player (-1 for O, 1 for X).
+dic_nodes_visited (dict): A dictionary of visited nodes with their board representation as keys.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: The best move (i, j) and its corresponding node, or None if the game is over.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.make_complete_simulation">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">make_complete_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#make_complete_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.make_complete_simulation" title="Link to this definition">#</a></dt>
+<dd><p>Completes a single simulation from the current state until the game ends, updating the tree with the result.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>board (Board): A copy of the board to simulate the game on.
+player (int): The player who is currently to move.
+dic_nodes_visited (dict): A dictionary of nodes visited during simulations.
+c (float): The exploration parameter for UCT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.play_mcts">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">play_mcts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_simulations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4142135623730951</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#play_mcts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.play_mcts" title="Link to this definition">#</a></dt>
+<dd><p>Performs Monte Carlo Tree Search to determine and play the best move for the current player.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>board (Board): The current game board.
+player (int): The current player making the move.
+nb_simulations (int): The number of simulations to run for the MCTS.
+c (float): The exploration parameter for UCT. Defaults to the square root of 2, balancing exploration and exploitation.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: A dictionary of visited nodes after the simulations, useful for further analysis or debugging.</p>
+</dd>
+<dt>Side effects:</dt><dd><p>Updates the board with the best move determined by the MCTS.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Code.MCTS.play_move_in_simulation">
+<span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">play_move_in_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#play_move_in_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.play_move_in_simulation" title="Link to this definition">#</a></dt>
+<dd><p>Simulates playing a move on the board for the current player using the Upper Confidence Bound for Trees (UCT) algorithm. This function chooses the next move based on the UCT value, plays the move on the board, and updates the simulation path with the chosen move and node.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>board (Board): The current state of the board on which the move will be simulated.
+player (int): The identifier of the current player (1 for player X, -1 for player O) making the move.
+dic_nodes_visited (dict): A dictionary mapping board representations to corresponding Node objects that have been visited in previous simulations. This is used to retrieve or update the nodes’ statistics without needing to reevaluate the entire board state.
+path (list): A list tracking the sequence of (Node, player) tuples visited during the current simulation. This is used for backpropagation of the simulation results.
+c (float): The exploration parameter for the UCT formula, controlling the trade-off between exploitation of known good moves and exploration of less-visited moves. A higher value encourages more exploration.</p>
+</dd>
+<dt>Note:</dt><dd><p>This function attempts to choose and play a move based on the UCT strategy. If no move can be played (e.g., the game is over), the function has no effect. It handles exceptions gracefully, ensuring the simulation can continue even if an unexpected state is encountered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Code.Board">
+<span id="code-board-module"></span><h2>Code.Board module<a class="headerlink" href="#module-Code.Board" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Code.Board.Board">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.Board.</span></span><span class="sig-name descname"><span class="pre">Board</span></span><a class="reference internal" href="_modules/Code/Board.html#Board"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.copy" title="Link to this definition">#</a></dt>
+<dd><p>Creates a deep copy of the current board state, including the grid, moves, game state, winning move, and available moves.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Board: A new Board instance with the copied state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addSpace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.display" title="Link to this definition">#</a></dt>
+<dd><p>Displays the entire board state in the console, with optional spacing after the board.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>addSpace (bool): If True, adds an extra newline after displaying the board. Default is False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.display_cell">
+<span class="sig-name descname"><span class="pre">display_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.display_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.display_cell" title="Link to this definition">#</a></dt>
+<dd><p>Prints the content of a specified cell on the board. Displays ‘X’, ‘O’, or an empty space accordingly.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>i (int): The row index of the cell.
+j (int): The column index of the cell.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.display_player_name">
+<span class="sig-name descname"><span class="pre">display_player_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.display_player_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.display_player_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns the display name of the player (‘X’ or ‘O’) based on the player’s identifier.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>player (int): The player identifier (1 for ‘X’, -1 for ‘O’).</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: The display name of the player.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.get_representation">
+<span class="sig-name descname"><span class="pre">get_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.get_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.get_representation" title="Link to this definition">#</a></dt>
+<dd><p>Generates a string representation of the entire board state, useful for debugging or logging.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: A string representing the board’s current state, with ‘X’, ‘O’, and ‘*’ for empty spaces.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.get_square_representation">
+<span class="sig-name descname"><span class="pre">get_square_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.get_square_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.get_square_representation" title="Link to this definition">#</a></dt>
+<dd><p>Returns a string representation of a cell’s content.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>i (int): The row index of the cell.
+(int): The column index of the cell.</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: The content of the cell represented as ‘X’, ‘O’, or ‘*’ for an empty cell.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.isGameOver">
+<span class="sig-name descname"><span class="pre">isGameOver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.isGameOver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.isGameOver" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the game is over, either because a player has won or all cells are filled (draw).</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>bool: True if the game is over, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.play">
+<span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.play" title="Link to this definition">#</a></dt>
+<dd><p>Plays a move on the board, updating the grid, moves, and game state.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>i (int): The row index for the move.
+j (int): The column index for the move.
+player (int): The identifier of the player making the move.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: If the game is over or the cell is not empty.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.playerWins_column">
+<span class="sig-name descname"><span class="pre">playerWins_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.playerWins_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.playerWins_column" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a player wins by completing a column.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>i (int): The row index of the last move.
+j (int): The column index of the last move.
+player (int): The identifier of the player who made the last move.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if the player wins by completing a column, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.playerWins_diag">
+<span class="sig-name descname"><span class="pre">playerWins_diag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.playerWins_diag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.playerWins_diag" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a player wins by completing a diagonal.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>player (int): The identifier of the player.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal (1 for top-bottom, 2 for bottom-top).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.playerWins_row">
+<span class="sig-name descname"><span class="pre">playerWins_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.playerWins_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.playerWins_row" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a player wins by completing a row.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>i (int): The row index of the last move.
+j (int): The column index of the last move.
+player (int): The identifier of the player who made the last move.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if the player wins by completing a row, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.undo_last_move">
+<span class="sig-name descname"><span class="pre">undo_last_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_move</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.undo_last_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.undo_last_move" title="Link to this definition">#</a></dt>
+<dd><p>Undoes the last move made on the board, reverting the game state accordingly.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>return_move (bool): If True, returns the last move made. Default is False.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board.Board.updateGameState">
+<span class="sig-name descname"><span class="pre">updateGameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.updateGameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.updateGameState" title="Link to this definition">#</a></dt>
+<dd><p>Updates the game state after a move. Checks if the move leads to a win or continues the game.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>i (int): The row index of the last move.
+j (int): The column index of the last move.
+player (int): The identifier of the player who made the last move.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Code">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Code" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="modules.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tic-Tac-Toe</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code.MCTS">Code.MCTS module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.add_parent"><code class="docutils literal notranslate"><span class="pre">Node.add_parent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.calculate_parents_visits"><code class="docutils literal notranslate"><span class="pre">Node.calculate_parents_visits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.calculate_uct"><code class="docutils literal notranslate"><span class="pre">Node.calculate_uct()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.calculate_winrate"><code class="docutils literal notranslate"><span class="pre">Node.calculate_winrate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.Node.update"><code class="docutils literal notranslate"><span class="pre">Node.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.back_to_start_state"><code class="docutils literal notranslate"><span class="pre">back_to_start_state()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.backpropagation"><code class="docutils literal notranslate"><span class="pre">backpropagation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.choose_node_uct"><code class="docutils literal notranslate"><span class="pre">choose_node_uct()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.choose_node_winrate"><code class="docutils literal notranslate"><span class="pre">choose_node_winrate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.make_complete_simulation"><code class="docutils literal notranslate"><span class="pre">make_complete_simulation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.play_mcts"><code class="docutils literal notranslate"><span class="pre">play_mcts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.MCTS.play_move_in_simulation"><code class="docutils literal notranslate"><span class="pre">play_move_in_simulation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code.Board">Code.Board module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board"><code class="docutils literal notranslate"><span class="pre">Board</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.copy"><code class="docutils literal notranslate"><span class="pre">Board.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.display"><code class="docutils literal notranslate"><span class="pre">Board.display()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.display_cell"><code class="docutils literal notranslate"><span class="pre">Board.display_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.display_player_name"><code class="docutils literal notranslate"><span class="pre">Board.display_player_name()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.get_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.get_square_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_square_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.isGameOver"><code class="docutils literal notranslate"><span class="pre">Board.isGameOver()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.play"><code class="docutils literal notranslate"><span class="pre">Board.play()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_column"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_column()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_diag"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_diag()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_row"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.undo_last_move"><code class="docutils literal notranslate"><span class="pre">Board.undo_last_move()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.updateGameState"><code class="docutils literal notranslate"><span class="pre">Board.updateGameState()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tristan Amadei
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Tristan Amadei.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
