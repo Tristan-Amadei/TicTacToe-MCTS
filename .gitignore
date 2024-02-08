@@ -1,2 +1,6 @@
 __pycache__/
 __pycache__
+
+*.ipynb*
+assets/gif/game_old.gif
+Code/Minimax_AlphaBeta.py

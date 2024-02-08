@@ -18,7 +18,7 @@ author = 'Tristan Amadei'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-autodoc_mock_imports = ["Board_script"]
+autodoc_mock_imports = ["Board_script", "MCTS"]
 extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.autodoc']
 
 templates_path = ['_templates']
