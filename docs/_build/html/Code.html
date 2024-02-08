@@ -331,6 +331,13 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.updateGameState"><code class="docutils literal notranslate"><span class="pre">Board.updateGameState()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction"><code class="docutils literal notranslate"><span class="pre">direction</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.COL"><code class="docutils literal notranslate"><span class="pre">direction.COL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.DIAG_BOTTOM_TOP"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_BOTTOM_TOP</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.DIAG_TOP_BOTTOM"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_TOP_BOTTOM</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.ROW"><code class="docutils literal notranslate"><span class="pre">direction.ROW</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code">Module contents</a></li>
@@ -353,165 +360,262 @@ document.write(`
 <dt class="sig sig-object py" id="Code.MCTS.Node">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents a node in the MCTS tree, encapsulating the state of the board, statistics of wins, draws, visits, and parent nodes.</p>
+<p>Represents a node in the MCTS tree.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Attributes:</dt><dd><p>board (Board): The state of the game at this node.
-wins (int): The number of wins observed from this node.
-draws (int): The number of draws observed from this node.
-visits (int): The number of visits to this node.
-parents (set): A set of parent nodes.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>The state of the game at this node.</p>
+</dd>
+<dt>parents<span class="classifier">set, optional</span></dt><dd><p>A set of parent nodes. Defaults to an empty set.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>board<span class="classifier">Board</span></dt><dd><p>The state of the game at this node.</p>
+</dd>
+<dt>wins<span class="classifier">int</span></dt><dd><p>The number of wins observed from this node.</p>
+</dd>
+<dt>draws<span class="classifier">int</span></dt><dd><p>The number of draws observed from this node.</p>
+</dd>
+<dt>visits<span class="classifier">int</span></dt><dd><p>The number of visits to this node.</p>
+</dd>
+<dt>parents<span class="classifier">set</span></dt><dd><p>A set of parent nodes.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.MCTS.Node.add_parent">
 <span class="sig-name descname"><span class="pre">add_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.add_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.add_parent" title="Link to this definition">#</a></dt>
-<dd><p>Adds a parent node to the current node. Parents are tracked to help with the calculation of visits and to maintain the tree structure for backpropagation.</p>
+<dd><p>Adds a parent node to the current node.</p>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>parent (Node or Board): The parent node to add. If a Board instance is passed, its representation is used as the parent identifier. Otherwise, the parent node itself is added to the parents set.</p>
+<dt>parent<span class="classifier">Node or Board</span></dt><dd><p>The parent node to add. If a Board instance is passed, its representation is used as the parent identifier. Otherwise, the parent node itself is added to the parents set.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.MCTS.Node.calculate_parents_visits">
 <span class="sig-name descname"><span class="pre">calculate_parents_visits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.calculate_parents_visits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.calculate_parents_visits" title="Link to this definition">#</a></dt>
-<dd><p>Calculates the total number of visits to all parent nodes. This is used in the UCT calculation to adjust the exploration term based on the total number of simulations that have passed through the parent nodes.</p>
+<dd><p>Calculates the total number of visits to all parent nodes.
+This is used in the UCT calculation to adjust the exploration term based on the total number of simulations that have passed through the parent nodes.</p>
+<section id="returns">
+<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>int: The total number of visits to this node’s parent nodes.</p>
+<dt>int</dt><dd><p>The total number of visits to this node’s parent nodes.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.MCTS.Node.calculate_uct">
 <span class="sig-name descname"><span class="pre">calculate_uct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.calculate_uct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.calculate_uct" title="Link to this definition">#</a></dt>
-<dd><p>Calculates the Upper Confidence Bound (UCT) for this node, used for selecting nodes during the tree search. The UCT value balances exploration and exploitation by considering both the win rate and the exploration term, which is influenced by the total number of parent visits and the number of visits to this node.</p>
+<dd><p>Calculates the Upper Confidence Bound (UCT) for this node, used for selecting nodes during the tree search. 
+The UCT value balances exploration and exploitation by considering both the win rate and the exploration term, 
+which is influenced by the total number of parent visits and the number of visits to this node.</p>
+<section id="id2">
+<h4>Parameters<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>c (float): The exploration parameter used in the UCT calculation. A higher value of c encourages more exploration.</p>
-</dd>
-<dt>Returns:</dt><dd><p>float: The UCT value for this node. Returns infinity (<cite>float(‘inf’)</cite>) if the node has not been visited, to ensure unvisited nodes are prioritized.</p>
+<dt>c<span class="classifier">float</span></dt><dd><p>The exploration parameter used in the UCT calculation.</p>
 </dd>
 </dl>
+</section>
+<section id="id3">
+<h4>Returns<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>float</dt><dd><p>The UCT value for this node. Returns infinity (<cite>float(‘inf’)</cite>) if the node has not been visited, to ensure unvisited nodes are prioritized.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.MCTS.Node.calculate_winrate">
 <span class="sig-name descname"><span class="pre">calculate_winrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.calculate_winrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.calculate_winrate" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the win rate for this node, considering both wins and draws. Draws are counted as half a win to indicate a partially positive outcome.</p>
+<section id="id4">
+<h4>Returns<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>float: The win rate of this node, calculated as (wins + 0.5 * draws) / visits.</p>
+<dt>float</dt><dd><p>The win rate of this node, calculated as (wins + 0.5 * draws) / visits.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.MCTS.Node.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#Node.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.Node.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the node’s statistics based on the outcome of a simulation. Increments the win or draw count, and the visit count.</p>
+<dd><p>Updates the node’s statistics based on the outcome of a simulation.</p>
+<section id="id5">
+<h4>Parameters<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>player (int): The identifier of the player (1 for player X, -1 for player O) who made the move leading to this node.
-winner (int): The outcome of the game from this node’s perspective (-1 for O wins, 1 for X wins, 0 for draw).</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player (1 for player X, -1 for player O) who made the move leading to this node.</p>
+</dd>
+<dt>winner<span class="classifier">int</span></dt><dd><p>The outcome of the game from this node’s perspective (-1 for O wins, 1 for X wins, 0 for draw).</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.back_to_start_state">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">back_to_start_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_moves_beginning</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#back_to_start_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.back_to_start_state" title="Link to this definition">#</a></dt>
 <dd><p>Reverts the board to a specified state by undoing moves until it reaches the number of moves at the beginning.</p>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>board (Board): The board to revert.
-nb_moves_beginning (int): The number of moves to revert to.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>The board to revert.</p>
+</dd>
+<dt>nb_moves_beginning<span class="classifier">int</span></dt><dd><p>The number of moves to revert to.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.backpropagation">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">backpropagation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#backpropagation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.backpropagation" title="Link to this definition">#</a></dt>
-<dd><p>Backpropagates the result of a simulation up the tree, updating the statistics of each node visited.</p>
+<dd><p>Backpropagates the result of a simulation up the tree.</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>path (list): The path of nodes visited in the simulation.
-winner (int): The outcome of the game (-1 for O wins, 1 for X wins, 0 for draw).</p>
+<dt>path<span class="classifier">list</span></dt><dd><p>The path of nodes visited in the simulation.</p>
+</dd>
+<dt>winner<span class="classifier">int</span></dt><dd><p>The outcome of the game (-1 for O wins, 1 for X wins, 0 for draw).</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.choose_node_uct">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">choose_node_uct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#choose_node_uct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.choose_node_uct" title="Link to this definition">#</a></dt>
 <dd><p>Chooses the next move based on the Upper Confidence Bound applied to trees (UCT) metric.</p>
+<section id="id8">
+<h3>Parameters<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>board (Board): The current state of the board.
-player (int): The current player (-1 for O, 1 for X).
-dic_nodes_visited (dict): A dictionary of visited nodes with their board representation as keys.
-c (float): The exploration parameter for UCT.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>The current state of the board.</p>
 </dd>
-<dt>Returns:</dt><dd><p>tuple: The best move (i, j) and its corresponding node, or None if the game is over.</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The current player (-1 for O, 1 for X).</p>
+</dd>
+<dt>dic_nodes_visited<span class="classifier">dict</span></dt><dd><p>A dictionary of visited nodes with their board representation as keys.</p>
+</dd>
+<dt>c<span class="classifier">float</span></dt><dd><p>The exploration parameter for UCT.</p>
 </dd>
 </dl>
+</section>
+<section id="id9">
+<h3>Returns<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>The best move (i, j) and its corresponding node, or None if the game is over.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.choose_node_winrate">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">choose_node_winrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#choose_node_winrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.choose_node_winrate" title="Link to this definition">#</a></dt>
 <dd><p>Chooses the next move based on the highest win rate from the visited nodes.</p>
+<section id="id10">
+<h3>Parameters<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>board (Board): The current state of the board.
-player (int): The current player (-1 for O, 1 for X).
-dic_nodes_visited (dict): A dictionary of visited nodes with their board representation as keys.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>The current state of the board.</p>
 </dd>
-<dt>Returns:</dt><dd><p>tuple: The best move (i, j) and its corresponding node, or None if the game is over.</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The current player (-1 for O, 1 for X).</p>
+</dd>
+<dt>dic_nodes_visited<span class="classifier">dict</span></dt><dd><p>A dictionary of visited nodes with their board representation as keys.</p>
 </dd>
 </dl>
+</section>
+<section id="id11">
+<h3>Returns<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>The best move (i, j) and its corresponding node, or None if the game is over.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.make_complete_simulation">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">make_complete_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#make_complete_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.make_complete_simulation" title="Link to this definition">#</a></dt>
-<dd><p>Completes a single simulation from the current state until the game ends, updating the tree with the result.</p>
+<dd><p>Completes a single simulation from the current state until the game ends.</p>
+<section id="id12">
+<h3>Parameters<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>board (Board): A copy of the board to simulate the game on.
-player (int): The player who is currently to move.
-dic_nodes_visited (dict): A dictionary of nodes visited during simulations.
-c (float): The exploration parameter for UCT.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>A copy of the board to simulate the game on.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The player who is currently to move.</p>
+</dd>
+<dt>dic_nodes_visited<span class="classifier">dict</span></dt><dd><p>A dictionary of nodes visited during simulations.</p>
+</dd>
+<dt>c<span class="classifier">float</span></dt><dd><p>The exploration parameter for UCT.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.play_mcts">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">play_mcts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_simulations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4142135623730951</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#play_mcts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.play_mcts" title="Link to this definition">#</a></dt>
-<dd><p>Performs Monte Carlo Tree Search to determine and play the best move for the current player.</p>
+<dd><p>Performs Monte Carlo Tree Search to determine and play the best move.</p>
+<section id="id13">
+<h3>Parameters<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>board (Board): The current game board.
-player (int): The current player making the move.
-nb_simulations (int): The number of simulations to run for the MCTS.
-c (float): The exploration parameter for UCT. Defaults to the square root of 2, balancing exploration and exploitation.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>The current game board.</p>
 </dd>
-<dt>Returns:</dt><dd><p>dict: A dictionary of visited nodes after the simulations, useful for further analysis or debugging.</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The current player making the move.</p>
 </dd>
-<dt>Side effects:</dt><dd><p>Updates the board with the best move determined by the MCTS.</p>
+<dt>nb_simulations<span class="classifier">int</span></dt><dd><p>The number of simulations to run for the MCTS.</p>
+</dd>
+<dt>c<span class="classifier">float, optional</span></dt><dd><p>The exploration parameter for UCT. Defaults to the square root of 2.</p>
 </dd>
 </dl>
+</section>
+<section id="id14">
+<h3>Returns<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary of visited nodes after the simulations.</p>
+</dd>
+</dl>
+</section>
+<section id="side-effects">
+<h3>Side effects<a class="headerlink" href="#side-effects" title="Link to this heading">#</a></h3>
+<p>Updates the board with the best move determined by the MCTS.</p>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Code.MCTS.play_move_in_simulation">
 <span class="sig-prename descclassname"><span class="pre">Code.MCTS.</span></span><span class="sig-name descname"><span class="pre">play_move_in_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic_nodes_visited</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/MCTS.html#play_move_in_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.MCTS.play_move_in_simulation" title="Link to this definition">#</a></dt>
-<dd><p>Simulates playing a move on the board for the current player using the Upper Confidence Bound for Trees (UCT) algorithm. This function chooses the next move based on the UCT value, plays the move on the board, and updates the simulation path with the chosen move and node.</p>
+<dd><p>Simulates playing a move on the board for the current player using the UCT algorithm.</p>
+<section id="id15">
+<h3>Parameters<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>board (Board): The current state of the board on which the move will be simulated.
-player (int): The identifier of the current player (1 for player X, -1 for player O) making the move.
-dic_nodes_visited (dict): A dictionary mapping board representations to corresponding Node objects that have been visited in previous simulations. This is used to retrieve or update the nodes’ statistics without needing to reevaluate the entire board state.
-path (list): A list tracking the sequence of (Node, player) tuples visited during the current simulation. This is used for backpropagation of the simulation results.
-c (float): The exploration parameter for the UCT formula, controlling the trade-off between exploitation of known good moves and exploration of less-visited moves. A higher value encourages more exploration.</p>
+<dt>board<span class="classifier">Board</span></dt><dd><p>The current state of the board on which the move will be simulated.</p>
 </dd>
-<dt>Note:</dt><dd><p>This function attempts to choose and play a move based on the UCT strategy. If no move can be played (e.g., the game is over), the function has no effect. It handles exceptions gracefully, ensuring the simulation can continue even if an unexpected state is encountered.</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the current player (1 for player X, -1 for player O) making the move.</p>
+</dd>
+<dt>dic_nodes_visited<span class="classifier">dict</span></dt><dd><p>A dictionary mapping board representations to corresponding Node objects.</p>
+</dd>
+<dt>path<span class="classifier">list</span></dt><dd><p>A list tracking the sequence of (Node, player) tuples visited during the current simulation.</p>
+</dd>
+<dt>c<span class="classifier">float</span></dt><dd><p>The exploration parameter for the UCT formula.</p>
 </dd>
 </dl>
+</section>
+<section id="note">
+<h3>Note<a class="headerlink" href="#note" title="Link to this heading">#</a></h3>
+<p>This function attempts to choose and play a move based on the UCT strategy. If no move can be played (e.g., the game is over), the function has no effect. It handles exceptions gracefully, ensuring the simulation can continue even if an unexpected state is encountered.</p>
+</section>
 </dd></dl>
 
 </section>
@@ -521,159 +625,285 @@ c (float): The exploration parameter for the UCT formula, controlling the trade-
 <dt class="sig sig-object py" id="Code.Board.Board">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.Board.</span></span><span class="sig-name descname"><span class="pre">Board</span></span><a class="reference internal" href="_modules/Code/Board.html#Board"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a Tic-Tac-Toe board.</p>
+<section id="id16">
+<h3>Attributes<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>grid<span class="classifier">list of list of int</span></dt><dd><p>The game board, a 3x3 grid where 1 represents player X, -1 represents player O, and 0 represents an empty space.</p>
+</dd>
+<dt>moves<span class="classifier">list of tuple</span></dt><dd><p>A list of moves made in the game, where each move is represented by a tuple (row, column, player).</p>
+</dd>
+<dt>gameState<span class="classifier">int</span></dt><dd><p>The current state of the game: 0 for ongoing, 1 for player X win, -1 for player O win, and 9 for a draw.</p>
+</dd>
+<dt>winningMove<span class="classifier">tuple</span></dt><dd><p>The winning move and its direction, if applicable.</p>
+</dd>
+<dt>available_moves<span class="classifier">set of tuple</span></dt><dd><p>A set of available moves, each represented by a tuple (row, column).</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.copy">
 <span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.copy" title="Link to this definition">#</a></dt>
-<dd><p>Creates a deep copy of the current board state, including the grid, moves, game state, winning move, and available moves.</p>
+<dd><p>Creates a deep copy of the current board state.</p>
+<section id="id17">
+<h4>Returns<a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>Board: A new Board instance with the copied state.</p>
+<dt>Board</dt><dd><p>A new Board instance with the copied state.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.display">
 <span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addSpace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.display" title="Link to this definition">#</a></dt>
-<dd><p>Displays the entire board state in the console, with optional spacing after the board.</p>
+<dd><p>Displays the entire board state in the console.</p>
+<section id="id18">
+<h4>Parameters<a class="headerlink" href="#id18" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>addSpace (bool): If True, adds an extra newline after displaying the board. Default is False.</p>
+<dt>addSpace<span class="classifier">bool, optional</span></dt><dd><p>If True, adds an extra newline after displaying the board. Default is False.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.display_cell">
 <span class="sig-name descname"><span class="pre">display_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.display_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.display_cell" title="Link to this definition">#</a></dt>
-<dd><p>Prints the content of a specified cell on the board. Displays ‘X’, ‘O’, or an empty space accordingly.</p>
+<dd><p>Prints the content of a specified cell on the board.</p>
+<section id="id19">
+<h4>Parameters<a class="headerlink" href="#id19" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>i (int): The row index of the cell.
-j (int): The column index of the cell.</p>
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the cell.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the cell.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.display_player_name">
 <span class="sig-name descname"><span class="pre">display_player_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.display_player_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.display_player_name" title="Link to this definition">#</a></dt>
-<dd><p>Returns the display name of the player (‘X’ or ‘O’) based on the player’s identifier.</p>
+<dd><p>Returns the display name of the player.</p>
+<section id="id20">
+<h4>Parameters<a class="headerlink" href="#id20" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>player (int): The player identifier (1 for ‘X’, -1 for ‘O’).</p>
-</dd>
-<dt>Returns:</dt><dd><p>str: The display name of the player.</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The player identifier (1 for ‘X’, -1 for ‘O’).</p>
 </dd>
 </dl>
+</section>
+<section id="id21">
+<h4>Returns<a class="headerlink" href="#id21" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>str</dt><dd><p>The display name of the player.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.get_representation">
 <span class="sig-name descname"><span class="pre">get_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.get_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.get_representation" title="Link to this definition">#</a></dt>
-<dd><p>Generates a string representation of the entire board state, useful for debugging or logging.</p>
+<dd><p>Generates a string representation of the entire board state.</p>
+<section id="id22">
+<h4>Returns<a class="headerlink" href="#id22" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>str: A string representing the board’s current state, with ‘X’, ‘O’, and ‘*’ for empty spaces.</p>
+<dt>str</dt><dd><p>A string representing the board’s current state.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.get_square_representation">
 <span class="sig-name descname"><span class="pre">get_square_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.get_square_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.get_square_representation" title="Link to this definition">#</a></dt>
 <dd><p>Returns a string representation of a cell’s content.</p>
+<section id="id23">
+<h4>Parameters<a class="headerlink" href="#id23" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>i (int): The row index of the cell.
-(int): The column index of the cell.</p>
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the cell.</p>
 </dd>
-<dt>Returns:</dt><dd><p>str: The content of the cell represented as ‘X’, ‘O’, or ‘*’ for an empty cell.</p>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the cell.</p>
 </dd>
 </dl>
+</section>
+<section id="id24">
+<h4>Returns<a class="headerlink" href="#id24" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>str</dt><dd><p>The content of the cell represented as ‘X’, ‘O’, or ‘*’ for an empty cell.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.isGameOver">
 <span class="sig-name descname"><span class="pre">isGameOver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.isGameOver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.isGameOver" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the game is over, either because a player has won or all cells are filled (draw).</p>
+<dd><p>Checks if the game is over.</p>
+<section id="id25">
+<h4>Returns<a class="headerlink" href="#id25" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>bool: True if the game is over, False otherwise.</p>
+<dt>bool</dt><dd><p>True if the game is over, False otherwise.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.play">
 <span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.play" title="Link to this definition">#</a></dt>
-<dd><p>Plays a move on the board, updating the grid, moves, and game state.</p>
+<dd><p>Plays a move on the board.</p>
+<section id="id26">
+<h4>Parameters<a class="headerlink" href="#id26" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>i (int): The row index for the move.
-j (int): The column index for the move.
-player (int): The identifier of the player making the move.</p>
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index for the move.</p>
 </dd>
-<dt>Raises:</dt><dd><p>Exception: If the game is over or the cell is not empty.</p>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index for the move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player making the move.</p>
 </dd>
 </dl>
+</section>
+<section id="raises">
+<h4>Raises<a class="headerlink" href="#raises" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>If the game is over or the cell is not empty.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.playerWins_column">
 <span class="sig-name descname"><span class="pre">playerWins_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.playerWins_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.playerWins_column" title="Link to this definition">#</a></dt>
 <dd><p>Checks if a player wins by completing a column.</p>
+<section id="id27">
+<h4>Parameters<a class="headerlink" href="#id27" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>i (int): The row index of the last move.
-j (int): The column index of the last move.
-player (int): The identifier of the player who made the last move.</p>
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the last move.</p>
 </dd>
-<dt>Returns:</dt><dd><p>bool: True if the player wins by completing a column, False otherwise.</p>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the last move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player who made the last move.</p>
 </dd>
 </dl>
+</section>
+<section id="id28">
+<h4>Returns<a class="headerlink" href="#id28" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the player wins by completing a column, False otherwise.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.playerWins_diag">
 <span class="sig-name descname"><span class="pre">playerWins_diag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.playerWins_diag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.playerWins_diag" title="Link to this definition">#</a></dt>
 <dd><p>Checks if a player wins by completing a diagonal.</p>
+<section id="id29">
+<h4>Parameters<a class="headerlink" href="#id29" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>player (int): The identifier of the player.</p>
-</dd>
-<dt>Returns:</dt><dd><p>tuple: A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal (1 for top-bottom, 2 for bottom-top).</p>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player.</p>
 </dd>
 </dl>
+</section>
+<section id="id30">
+<h4>Returns<a class="headerlink" href="#id30" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.playerWins_row">
 <span class="sig-name descname"><span class="pre">playerWins_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.playerWins_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.playerWins_row" title="Link to this definition">#</a></dt>
 <dd><p>Checks if a player wins by completing a row.</p>
+<section id="id31">
+<h4>Parameters<a class="headerlink" href="#id31" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>i (int): The row index of the last move.
-j (int): The column index of the last move.
-player (int): The identifier of the player who made the last move.</p>
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the last move.</p>
 </dd>
-<dt>Returns:</dt><dd><p>bool: True if the player wins by completing a row, False otherwise.</p>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the last move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player who made the last move.</p>
 </dd>
 </dl>
+</section>
+<section id="id32">
+<h4>Returns<a class="headerlink" href="#id32" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the player wins by completing a row, False otherwise.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.undo_last_move">
 <span class="sig-name descname"><span class="pre">undo_last_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_move</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.undo_last_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.undo_last_move" title="Link to this definition">#</a></dt>
-<dd><p>Undoes the last move made on the board, reverting the game state accordingly.</p>
+<dd><p>Undoes the last move made on the board.</p>
+<section id="id33">
+<h4>Parameters<a class="headerlink" href="#id33" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>return_move (bool): If True, returns the last move made. Default is False.</p>
-</dd>
-<dt>Returns:</dt><dd><p>tuple: The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.</p>
+<dt>return_move<span class="classifier">bool, optional</span></dt><dd><p>If True, returns the last move made. Default is False.</p>
 </dd>
 </dl>
+</section>
+<section id="id34">
+<h4>Returns<a class="headerlink" href="#id34" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>tuple, optional</dt><dd><p>The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Code.Board.Board.updateGameState">
 <span class="sig-name descname"><span class="pre">updateGameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#Board.updateGameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.Board.updateGameState" title="Link to this definition">#</a></dt>
-<dd><p>Updates the game state after a move. Checks if the move leads to a win or continues the game.</p>
+<dd><p>Updates the game state after a move.</p>
+<section id="id35">
+<h4>Parameters<a class="headerlink" href="#id35" title="Link to this heading">#</a></h4>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>i (int): The row index of the last move.
-j (int): The column index of the last move.
-player (int): The identifier of the player who made the last move.</p>
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the last move.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the last move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player who made the last move.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Code.Board.direction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.Board.</span></span><span class="sig-name descname"><span class="pre">direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board.html#direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board.direction" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board.direction.COL">
+<span class="sig-name descname"><span class="pre">COL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#Code.Board.direction.COL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board.direction.DIAG_BOTTOM_TOP">
+<span class="sig-name descname"><span class="pre">DIAG_BOTTOM_TOP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#Code.Board.direction.DIAG_BOTTOM_TOP" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board.direction.DIAG_TOP_BOTTOM">
+<span class="sig-name descname"><span class="pre">DIAG_TOP_BOTTOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#Code.Board.direction.DIAG_TOP_BOTTOM" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board.direction.ROW">
+<span class="sig-name descname"><span class="pre">ROW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#Code.Board.direction.ROW" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -751,6 +981,13 @@ player (int): The identifier of the player who made the last move.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.playerWins_row"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.undo_last_move"><code class="docutils literal notranslate"><span class="pre">Board.undo_last_move()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.Board.updateGameState"><code class="docutils literal notranslate"><span class="pre">Board.updateGameState()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction"><code class="docutils literal notranslate"><span class="pre">direction</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.COL"><code class="docutils literal notranslate"><span class="pre">direction.COL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.DIAG_BOTTOM_TOP"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_BOTTOM_TOP</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.DIAG_TOP_BOTTOM"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_TOP_BOTTOM</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board.direction.ROW"><code class="docutils literal notranslate"><span class="pre">direction.ROW</span></code></a></li>
 </ul>
 </li>
 </ul>

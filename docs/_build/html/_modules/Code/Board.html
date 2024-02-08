@@ -252,15 +252,37 @@ document.write(`
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 
+<div class="viewcode-block" id="direction">
+<a class="viewcode-back" href="../../Code.html#Code.Board.direction">[docs]</a>
+<span class="k">class</span> <span class="nc">direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">ROW</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">COL</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">DIAG_TOP_BOTTOM</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">DIAG_BOTTOM_TOP</span> <span class="o">=</span> <span class="mi">4</span></div>
+
 
 <div class="viewcode-block" id="Board">
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board">[docs]</a>
 <span class="k">class</span> <span class="nc">Board</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a Tic-Tac-Toe board.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : list of list of int</span>
+<span class="sd">        The game board, a 3x3 grid where 1 represents player X, -1 represents player O, and 0 represents an empty space.</span>
+<span class="sd">    moves : list of tuple</span>
+<span class="sd">        A list of moves made in the game, where each move is represented by a tuple (row, column, player).</span>
+<span class="sd">    gameState : int</span>
+<span class="sd">        The current state of the game: 0 for ongoing, 1 for player X win, -1 for player O win, and 9 for a draw.</span>
+<span class="sd">    winningMove : tuple</span>
+<span class="sd">        The winning move and its direction, if applicable.</span>
+<span class="sd">    available_moves : set of tuple</span>
+<span class="sd">        A set of available moves, each represented by a tuple (row, column).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes a new Tic-Tac-Toe board with an empty grid, list of moves, game state, winning move, and available moves.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a new Tic-Tac-Toe board.&quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">moves</span> <span class="o">=</span> <span class="p">[]</span>
@@ -272,10 +294,12 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.copy">[docs]</a>
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a deep copy of the current board state, including the grid, moves, game state, winning move, and available moves.</span>
+<span class="sd">        Creates a deep copy of the current board state.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            Board: A new Board instance with the copied state.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Board</span>
+<span class="sd">            A new Board instance with the copied state.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="n">board_copy</span> <span class="o">=</span> <span class="n">Board</span><span class="p">()</span>
@@ -291,11 +315,14 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.display_cell">[docs]</a>
     <span class="k">def</span> <span class="nf">display_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Prints the content of a specified cell on the board. Displays &#39;X&#39;, &#39;O&#39;, or an empty space accordingly.</span>
+<span class="sd">        Prints the content of a specified cell on the board.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            i (int): The row index of the cell.</span>
-<span class="sd">            j (int): The column index of the cell.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The row index of the cell.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            The column index of the cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -310,10 +337,12 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.display">[docs]</a>
     <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addSpace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Displays the entire board state in the console, with optional spacing after the board.</span>
+<span class="sd">        Displays the entire board state in the console.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            addSpace (bool): If True, adds an extra newline after displaying the board. Default is False.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        addSpace : bool, optional</span>
+<span class="sd">            If True, adds an extra newline after displaying the board. Default is False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
@@ -333,14 +362,18 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.display_player_name">[docs]</a>
     <span class="k">def</span> <span class="nf">display_player_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">player</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the display name of the player (&#39;X&#39; or &#39;O&#39;) based on the player&#39;s identifier.</span>
+<span class="sd">        Returns the display name of the player.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            player (int): The player identifier (1 for &#39;X&#39;, -1 for &#39;O&#39;).</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        player : int</span>
+<span class="sd">            The player identifier (1 for &#39;X&#39;, -1 for &#39;O&#39;).</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            str: The display name of the player.</span>
-<span class="sd">            &quot;&quot;&quot;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The display name of the player.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
             
         <span class="k">if</span> <span class="n">player</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;X&quot;</span>
@@ -351,12 +384,16 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.updateGameState">[docs]</a>
     <span class="k">def</span> <span class="nf">updateGameState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">player</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates the game state after a move. Checks if the move leads to a win or continues the game.</span>
+<span class="sd">        Updates the game state after a move.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            i (int): The row index of the last move.</span>
-<span class="sd">            j (int): The column index of the last move.</span>
-<span class="sd">            player (int): The identifier of the player who made the last move.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The row index of the last move.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            The column index of the last move.</span>
+<span class="sd">        player : int</span>
+<span class="sd">            The identifier of the player who made the last move.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">9</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">gameState</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -388,13 +425,19 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if a player wins by completing a row.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            i (int): The row index of the last move.</span>
-<span class="sd">            j (int): The column index of the last move.</span>
-<span class="sd">            player (int): The identifier of the player who made the last move.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The row index of the last move.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            The column index of the last move.</span>
+<span class="sd">        player : int</span>
+<span class="sd">            The identifier of the player who made the last move.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: True if the player wins by completing a row, False otherwise.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if the player wins by completing a row, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -410,13 +453,19 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if a player wins by completing a column.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            i (int): The row index of the last move.</span>
-<span class="sd">            j (int): The column index of the last move.</span>
-<span class="sd">            player (int): The identifier of the player who made the last move.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The row index of the last move.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            The column index of the last move.</span>
+<span class="sd">        player : int</span>
+<span class="sd">            The identifier of the player who made the last move.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: True if the player wins by completing a column, False otherwise.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if the player wins by completing a column, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -432,11 +481,15 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if a player wins by completing a diagonal.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            player (int): The identifier of the player.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        player : int</span>
+<span class="sd">            The identifier of the player.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            tuple: A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal (1 for top-bottom, 2 for bottom-top).</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">player</span><span class="p">:</span>
@@ -449,15 +502,21 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.play">[docs]</a>
     <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">player</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Plays a move on the board, updating the grid, moves, and game state.</span>
+<span class="sd">        Plays a move on the board.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            i (int): The row index for the move.</span>
-<span class="sd">            j (int): The column index for the move.</span>
-<span class="sd">            player (int): The identifier of the player making the move.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The row index for the move.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            The column index for the move.</span>
+<span class="sd">        player : int</span>
+<span class="sd">            The identifier of the player making the move.</span>
 
-<span class="sd">        Raises:</span>
-<span class="sd">            Exception: If the game is over or the cell is not empty.</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the game is over or the cell is not empty.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gameState</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
@@ -480,13 +539,17 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.undo_last_move">[docs]</a>
     <span class="k">def</span> <span class="nf">undo_last_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_move</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Undoes the last move made on the board, reverting the game state accordingly.</span>
+<span class="sd">        Undoes the last move made on the board.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            return_move (bool): If True, returns the last move made. Default is False.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        return_move : bool, optional</span>
+<span class="sd">            If True, returns the last move made. Default is False.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            tuple: The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple, optional</span>
+<span class="sd">            The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -508,12 +571,17 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of a cell&#39;s content.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            i (int): The row index of the cell.</span>
-<span class="sd">            (int): The column index of the cell.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The row index of the cell.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            The column index of the cell.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            str: The content of the cell represented as &#39;X&#39;, &#39;O&#39;, or &#39;*&#39; for an empty cell.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The content of the cell represented as &#39;X&#39;, &#39;O&#39;, or &#39;*&#39; for an empty cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -527,10 +595,12 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.get_representation">[docs]</a>
     <span class="k">def</span> <span class="nf">get_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a string representation of the entire board state, useful for debugging or logging.</span>
+<span class="sd">        Generates a string representation of the entire board state.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            str: A string representing the board&#39;s current state, with &#39;X&#39;, &#39;O&#39;, and &#39;*&#39; for empty spaces.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A string representing the board&#39;s current state.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">representation</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -544,10 +614,12 @@ document.write(`
 <a class="viewcode-back" href="../../Code.html#Code.Board.Board.isGameOver">[docs]</a>
     <span class="k">def</span> <span class="nf">isGameOver</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks if the game is over, either because a player has won or all cells are filled (draw).</span>
+<span class="sd">        Checks if the game is over.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: True if the game is over, False otherwise.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if the game is over, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gameState</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gameState</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">)</span></div>

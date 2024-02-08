@@ -9,20 +9,24 @@ class direction(Enum):
 
 class Board:
     """
-    Players:
-        1 = player X
-        -1 = player O
-
-    Game State:
-        0 and 9 moves played: draw
-        -1: player O wins the game
-        1: player X wins the game
+    A class representing a Tic-Tac-Toe board.
+    
+    Attributes
+    ----------
+    grid : list of list of int
+        The game board, a 3x3 grid where 1 represents player X, -1 represents player O, and 0 represents an empty space.
+    moves : list of tuple
+        A list of moves made in the game, where each move is represented by a tuple (row, column, player).
+    gameState : int
+        The current state of the game: 0 for ongoing, 1 for player X win, -1 for player O win, and 9 for a draw.
+    winningMove : tuple
+        The winning move and its direction, if applicable.
+    available_moves : set of tuple
+        A set of available moves, each represented by a tuple (row, column).
     """
 
     def __init__(self):
-        """
-        Initializes a new Tic-Tac-Toe board with an empty grid, list of moves, game state, winning move, and available moves.
-        """
+        """Initialize a new Tic-Tac-Toe board."""
         
         self.grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.moves = []
@@ -32,10 +36,12 @@ class Board:
         
     def copy(self):
         """
-        Creates a deep copy of the current board state, including the grid, moves, game state, winning move, and available moves.
+        Creates a deep copy of the current board state.
 
-        Returns:
-            Board: A new Board instance with the copied state.
+        Returns
+        -------
+        Board
+            A new Board instance with the copied state.
         """
         
         board_copy = Board()
@@ -48,11 +54,14 @@ class Board:
 
     def display_cell(self, i, j):
         """
-        Prints the content of a specified cell on the board. Displays 'X', 'O', or an empty space accordingly.
+        Prints the content of a specified cell on the board.
 
-        Parameters:
-            i (int): The row index of the cell.
-            j (int): The column index of the cell.
+        Parameters
+        ----------
+        i : int
+            The row index of the cell.
+        j : int
+            The column index of the cell.
         """
         
         if self.grid[i][j] == 0:
@@ -64,10 +73,12 @@ class Board:
 
     def display(self, addSpace=False):
         """
-        Displays the entire board state in the console, with optional spacing after the board.
+        Displays the entire board state in the console.
 
-        Parameters:
-            addSpace (bool): If True, adds an extra newline after displaying the board. Default is False.
+        Parameters
+        ----------
+        addSpace : bool, optional
+            If True, adds an extra newline after displaying the board. Default is False.
         """
         
         for i in range(3):
@@ -84,14 +95,18 @@ class Board:
 
     def display_player_name(self, player):
         """
-        Returns the display name of the player ('X' or 'O') based on the player's identifier.
+        Returns the display name of the player.
 
-        Parameters:
-            player (int): The player identifier (1 for 'X', -1 for 'O').
+        Parameters
+        ----------
+        player : int
+            The player identifier (1 for 'X', -1 for 'O').
 
-        Returns:
-            str: The display name of the player.
-            """
+        Returns
+        -------
+        str
+            The display name of the player.
+        """
             
         if player == 1:
             return "X"
@@ -99,12 +114,16 @@ class Board:
 
     def updateGameState(self, i, j, player):
         """
-        Updates the game state after a move. Checks if the move leads to a win or continues the game.
+        Updates the game state after a move.
 
-        Parameters:
-            i (int): The row index of the last move.
-            j (int): The column index of the last move.
-            player (int): The identifier of the player who made the last move.
+        Parameters
+        ----------
+        i : int
+            The row index of the last move.
+        j : int
+            The column index of the last move.
+        player : int
+            The identifier of the player who made the last move.
         """
         
         if len(self.moves) > 9 or self.gameState != 0:
@@ -133,13 +152,19 @@ class Board:
         """
         Checks if a player wins by completing a row.
 
-        Parameters:
-            i (int): The row index of the last move.
-            j (int): The column index of the last move.
-            player (int): The identifier of the player who made the last move.
+        Parameters
+        ----------
+        i : int
+            The row index of the last move.
+        j : int
+            The column index of the last move.
+        player : int
+            The identifier of the player who made the last move.
 
-        Returns:
-            bool: True if the player wins by completing a row, False otherwise.
+        Returns
+        -------
+        bool
+            True if the player wins by completing a row, False otherwise.
         """
         
         if j == 0:
@@ -152,13 +177,19 @@ class Board:
         """
         Checks if a player wins by completing a column.
 
-        Parameters:
-            i (int): The row index of the last move.
-            j (int): The column index of the last move.
-            player (int): The identifier of the player who made the last move.
+        Parameters
+        ----------
+        i : int
+            The row index of the last move.
+        j : int
+            The column index of the last move.
+        player : int
+            The identifier of the player who made the last move.
 
-        Returns:
-            bool: True if the player wins by completing a column, False otherwise.
+        Returns
+        -------
+        bool
+            True if the player wins by completing a column, False otherwise.
         """
         
         if i == 0:
@@ -171,11 +202,15 @@ class Board:
         """
         Checks if a player wins by completing a diagonal.
 
-        Parameters:
-            player (int): The identifier of the player.
+        Parameters
+        ----------
+        player : int
+            The identifier of the player.
 
-        Returns:
-            tuple: A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal (1 for top-bottom, 2 for bottom-top).
+        Returns
+        -------
+        tuple
+            A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal.
         """
         
         if self.grid[0][0] == self.grid[1][1] == self.grid[2][2] == player:
@@ -185,15 +220,21 @@ class Board:
 
     def play(self, i, j, player):
         """
-        Plays a move on the board, updating the grid, moves, and game state.
+        Plays a move on the board.
 
-        Parameters:
-            i (int): The row index for the move.
-            j (int): The column index for the move.
-            player (int): The identifier of the player making the move.
+        Parameters
+        ----------
+        i : int
+            The row index for the move.
+        j : int
+            The column index for the move.
+        player : int
+            The identifier of the player making the move.
 
-        Raises:
-            Exception: If the game is over or the cell is not empty.
+        Raises
+        ------
+        Exception
+            If the game is over or the cell is not empty.
         """
         
         if self.gameState != 0 or len(self.moves) >= 9:
@@ -213,13 +254,17 @@ class Board:
         
     def undo_last_move(self, return_move=False):
         """
-        Undoes the last move made on the board, reverting the game state accordingly.
+        Undoes the last move made on the board.
 
-        Parameters:
-            return_move (bool): If True, returns the last move made. Default is False.
+        Parameters
+        ----------
+        return_move : bool, optional
+            If True, returns the last move made. Default is False.
 
-        Returns:
-            tuple: The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.
+        Returns
+        -------
+        tuple, optional
+            The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.
         """
         
         if len(self.moves) == 0:
@@ -238,12 +283,17 @@ class Board:
         """
         Returns a string representation of a cell's content.
 
-        Parameters:
-            i (int): The row index of the cell.
-            (int): The column index of the cell.
+        Parameters
+        ----------
+        i : int
+            The row index of the cell.
+        j : int
+            The column index of the cell.
 
-        Returns:
-            str: The content of the cell represented as 'X', 'O', or '*' for an empty cell.
+        Returns
+        -------
+        str
+            The content of the cell represented as 'X', 'O', or '*' for an empty cell.
         """
         
         if self.grid[i][j] == 0:
@@ -254,10 +304,12 @@ class Board:
         
     def get_representation(self):
         """
-        Generates a string representation of the entire board state, useful for debugging or logging.
+        Generates a string representation of the entire board state.
 
-        Returns:
-            str: A string representing the board's current state, with 'X', 'O', and '*' for empty spaces.
+        Returns
+        -------
+        str
+            A string representing the board's current state.
         """
 
         representation = ''
@@ -268,10 +320,12 @@ class Board:
     
     def isGameOver(self):
         """
-        Checks if the game is over, either because a player has won or all cells are filled (draw).
+        Checks if the game is over.
 
-        Returns:
-            bool: True if the game is over, False otherwise.
+        Returns
+        -------
+        bool
+            True if the game is over, False otherwise.
         """
         
         return self.gameState != 0 or (self.gameState == 0 and len(self.moves) >= 9)
