@@ -1,4 +1,4 @@
-from Board import Board
+from Board_script import Board
 import numpy as np
 
 def back_to_start_state(board, nb_moves_beginning):

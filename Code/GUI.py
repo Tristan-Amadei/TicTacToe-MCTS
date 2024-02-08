@@ -1,5 +1,5 @@
 import pygame
-from Board import Board, direction
+from Board_script import Board, direction
 from threading import Thread
 from MCTS import play_mcts
 

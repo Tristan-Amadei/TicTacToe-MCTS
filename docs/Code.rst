@@ -12,7 +12,7 @@ Code.MCTS module
 Code.Board module
 -----------------
 
-.. automodule:: Code.Board
+.. automodule:: Code.Board_script
    :members:
    :undoc-members:
    :show-inheritance:
