@@ -3,6 +3,7 @@
 ## Documentation
 The documentation of the important part of the code (namely all the scripts except the script for the GUI) have been built into HTML with sphinx, and hosted on GitHub pages. <br>
 This documentation can be found here: https://tristan-amadei.github.io/TicTacToe-MCTS/
+If there rendering problems, the central HTML page can be found at: `docs/_build/html/index.html`.
 
 ## How to play
 ##### Install dependencies
