@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Code package &#8212; TicTacToe-MCTS  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Code';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tic-Tac-Toe" href="modules.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TicTacToe-MCTS  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">Tic-Tac-Toe</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Code package</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Code.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Code package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-mcts-module">Code.MCTS module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code.Board_script">Code.Board module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board"><code class="docutils literal notranslate"><span class="pre">Board</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.copy"><code class="docutils literal notranslate"><span class="pre">Board.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.display"><code class="docutils literal notranslate"><span class="pre">Board.display()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.display_cell"><code class="docutils literal notranslate"><span class="pre">Board.display_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.display_player_name"><code class="docutils literal notranslate"><span class="pre">Board.display_player_name()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.get_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.get_square_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_square_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.isGameOver"><code class="docutils literal notranslate"><span class="pre">Board.isGameOver()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.play"><code class="docutils literal notranslate"><span class="pre">Board.play()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.playerWins_column"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_column()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.playerWins_diag"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_diag()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.playerWins_row"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.undo_last_move"><code class="docutils literal notranslate"><span class="pre">Board.undo_last_move()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.updateGameState"><code class="docutils literal notranslate"><span class="pre">Board.updateGameState()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction"><code class="docutils literal notranslate"><span class="pre">direction</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.COL"><code class="docutils literal notranslate"><span class="pre">direction.COL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.DIAG_BOTTOM_TOP"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_BOTTOM_TOP</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.DIAG_TOP_BOTTOM"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_TOP_BOTTOM</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.ROW"><code class="docutils literal notranslate"><span class="pre">direction.ROW</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="code-package">
+<h1>Code package<a class="headerlink" href="#code-package" title="Link to this heading">#</a></h1>
+<section id="code-mcts-module">
+<h2>Code.MCTS module<a class="headerlink" href="#code-mcts-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-Code.Board_script">
+<span id="code-board-module"></span><h2>Code.Board module<a class="headerlink" href="#module-Code.Board_script" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Code.Board_script.Board">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.Board_script.</span></span><span class="sig-name descname"><span class="pre">Board</span></span><a class="reference internal" href="_modules/Code/Board_script.html#Board"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a Tic-Tac-Toe board.</p>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>grid<span class="classifier">list of list of int</span></dt><dd><p>The game board, a 3x3 grid where 1 represents player X, -1 represents player O, and 0 represents an empty space.</p>
+</dd>
+<dt>moves<span class="classifier">list of tuple</span></dt><dd><p>A list of moves made in the game, where each move is represented by a tuple (row, column, player).</p>
+</dd>
+<dt>gameState<span class="classifier">int</span></dt><dd><p>The current state of the game: 0 for ongoing, 1 for player X win, -1 for player O win, and 9 for a draw.</p>
+</dd>
+<dt>winningMove<span class="classifier">tuple</span></dt><dd><p>The winning move and its direction, if applicable.</p>
+</dd>
+<dt>available_moves<span class="classifier">set of tuple</span></dt><dd><p>A set of available moves, each represented by a tuple (row, column).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.copy" title="Link to this definition">#</a></dt>
+<dd><p>Creates a deep copy of the current board state.</p>
+<section id="returns">
+<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>Board</dt><dd><p>A new Board instance with the copied state.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addSpace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.display" title="Link to this definition">#</a></dt>
+<dd><p>Displays the entire board state in the console.</p>
+<section id="parameters">
+<h4>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>addSpace<span class="classifier">bool, optional</span></dt><dd><p>If True, adds an extra newline after displaying the board. Default is False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.display_cell">
+<span class="sig-name descname"><span class="pre">display_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.display_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.display_cell" title="Link to this definition">#</a></dt>
+<dd><p>Prints the content of a specified cell on the board.</p>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the cell.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the cell.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.display_player_name">
+<span class="sig-name descname"><span class="pre">display_player_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.display_player_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.display_player_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns the display name of the player.</p>
+<section id="id2">
+<h4>Parameters<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>player<span class="classifier">int</span></dt><dd><p>The player identifier (1 for ‘X’, -1 for ‘O’).</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h4>Returns<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>str</dt><dd><p>The display name of the player.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.get_representation">
+<span class="sig-name descname"><span class="pre">get_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.get_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.get_representation" title="Link to this definition">#</a></dt>
+<dd><p>Generates a string representation of the entire board state.</p>
+<section id="id4">
+<h4>Returns<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>str</dt><dd><p>A string representing the board’s current state.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.get_square_representation">
+<span class="sig-name descname"><span class="pre">get_square_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.get_square_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.get_square_representation" title="Link to this definition">#</a></dt>
+<dd><p>Returns a string representation of a cell’s content.</p>
+<section id="id5">
+<h4>Parameters<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the cell.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the cell.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h4>Returns<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>str</dt><dd><p>The content of the cell represented as ‘X’, ‘O’, or ‘*’ for an empty cell.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.isGameOver">
+<span class="sig-name descname"><span class="pre">isGameOver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.isGameOver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.isGameOver" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the game is over.</p>
+<section id="id7">
+<h4>Returns<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the game is over, False otherwise.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.play">
+<span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.play" title="Link to this definition">#</a></dt>
+<dd><p>Plays a move on the board.</p>
+<section id="id8">
+<h4>Parameters<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index for the move.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index for the move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player making the move.</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h4>Raises<a class="headerlink" href="#raises" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>If the game is over or the cell is not empty.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.playerWins_column">
+<span class="sig-name descname"><span class="pre">playerWins_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.playerWins_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.playerWins_column" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a player wins by completing a column.</p>
+<section id="id9">
+<h4>Parameters<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the last move.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the last move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player who made the last move.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h4>Returns<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the player wins by completing a column, False otherwise.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.playerWins_diag">
+<span class="sig-name descname"><span class="pre">playerWins_diag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.playerWins_diag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.playerWins_diag" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a player wins by completing a diagonal.</p>
+<section id="id11">
+<h4>Parameters<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h4>Returns<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing a boolean indicating if a player wins and an integer indicating which diagonal.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.playerWins_row">
+<span class="sig-name descname"><span class="pre">playerWins_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.playerWins_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.playerWins_row" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a player wins by completing a row.</p>
+<section id="id13">
+<h4>Parameters<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the last move.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the last move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player who made the last move.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h4>Returns<a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the player wins by completing a row, False otherwise.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.undo_last_move">
+<span class="sig-name descname"><span class="pre">undo_last_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_move</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.undo_last_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.undo_last_move" title="Link to this definition">#</a></dt>
+<dd><p>Undoes the last move made on the board.</p>
+<section id="id15">
+<h4>Parameters<a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>return_move<span class="classifier">bool, optional</span></dt><dd><p>If True, returns the last move made. Default is False.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h4>Returns<a class="headerlink" href="#id16" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>tuple, optional</dt><dd><p>The last move made (i, j, player) if return_move is True. Otherwise, nothing is returned.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Code.Board_script.Board.updateGameState">
+<span class="sig-name descname"><span class="pre">updateGameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#Board.updateGameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.Board.updateGameState" title="Link to this definition">#</a></dt>
+<dd><p>Updates the game state after a move.</p>
+<section id="id17">
+<h4>Parameters<a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>i<span class="classifier">int</span></dt><dd><p>The row index of the last move.</p>
+</dd>
+<dt>j<span class="classifier">int</span></dt><dd><p>The column index of the last move.</p>
+</dd>
+<dt>player<span class="classifier">int</span></dt><dd><p>The identifier of the player who made the last move.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Code.Board_script.direction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Code.Board_script.</span></span><span class="sig-name descname"><span class="pre">direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Code/Board_script.html#direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Code.Board_script.direction" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board_script.direction.COL">
+<span class="sig-name descname"><span class="pre">COL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#Code.Board_script.direction.COL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board_script.direction.DIAG_BOTTOM_TOP">
+<span class="sig-name descname"><span class="pre">DIAG_BOTTOM_TOP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#Code.Board_script.direction.DIAG_BOTTOM_TOP" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board_script.direction.DIAG_TOP_BOTTOM">
+<span class="sig-name descname"><span class="pre">DIAG_TOP_BOTTOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#Code.Board_script.direction.DIAG_TOP_BOTTOM" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Code.Board_script.direction.ROW">
+<span class="sig-name descname"><span class="pre">ROW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#Code.Board_script.direction.ROW" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Code">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Code" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="modules.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tic-Tac-Toe</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-mcts-module">Code.MCTS module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code.Board_script">Code.Board module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board"><code class="docutils literal notranslate"><span class="pre">Board</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.copy"><code class="docutils literal notranslate"><span class="pre">Board.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.display"><code class="docutils literal notranslate"><span class="pre">Board.display()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.display_cell"><code class="docutils literal notranslate"><span class="pre">Board.display_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.display_player_name"><code class="docutils literal notranslate"><span class="pre">Board.display_player_name()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.get_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.get_square_representation"><code class="docutils literal notranslate"><span class="pre">Board.get_square_representation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.isGameOver"><code class="docutils literal notranslate"><span class="pre">Board.isGameOver()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.play"><code class="docutils literal notranslate"><span class="pre">Board.play()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.playerWins_column"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_column()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.playerWins_diag"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_diag()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.playerWins_row"><code class="docutils literal notranslate"><span class="pre">Board.playerWins_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.undo_last_move"><code class="docutils literal notranslate"><span class="pre">Board.undo_last_move()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.Board.updateGameState"><code class="docutils literal notranslate"><span class="pre">Board.updateGameState()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction"><code class="docutils literal notranslate"><span class="pre">direction</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.COL"><code class="docutils literal notranslate"><span class="pre">direction.COL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.DIAG_BOTTOM_TOP"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_BOTTOM_TOP</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.DIAG_TOP_BOTTOM"><code class="docutils literal notranslate"><span class="pre">direction.DIAG_TOP_BOTTOM</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Code.Board_script.direction.ROW"><code class="docutils literal notranslate"><span class="pre">direction.ROW</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-Code">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tristan Amadei
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Tristan Amadei.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
